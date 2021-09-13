@@ -1,0 +1,401 @@
+﻿<!DOCTYPE html>
+<html style="font-size: 16px;">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="robots" content="nofollow" />
+    <meta name="revisit-after" content="2 Day">
+    <meta name="keywords" content="crypto coin bitcoin altcoin news kripto haber para koin turk piyasa kolik sistemi sistem uzman limenya bulteni btc alemi alem video">
+    <meta name="description" content="kripto haberleri için çevrimiçi kaynağınız || kripto haberleri için çevrimiçi kaynağınız">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+
+    <title>Uyaranlar Your Source of Crypto News</title>
+    <meta name="google-site-verification" content="OoWc0mS5pmJ0vfSy5KchSSscsGomRLnUuQn3wJZXS38" />
+    <link rel="stylesheet" href="/css/nicepage.css" media="screen">
+    <link rel="stylesheet" href="/css/home.css" media="screen">
+    <link rel="stylesheet" href="/css/mediabox.css">
+    
+    <link rel="icon" href="/images/favicon.ico">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,500,500i,700,700i">
+
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "News Video Site",
+		"name": "Uyaranlar",
+		"url": "htps://uyaranlar.com",
+		"logo": "images/logo1.png"
+}</script>
+    <meta property="og:title" content="Uyranlar">
+    <meta property="og:type" content="video.other">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="https://uyaranlar.com">
+    <meta property="og:url" content="index.html">
+    <meta name="description" content="All crypto news from your favorite crypto sites">
+
+    <style>
+      .loader-overlay{
+        position: absolute; 
+        width:100%;
+        height:100%; 
+        background-image: radial-gradient(circle farthest-corner at center, #3C4B57 0%, #1C262B 100%);
+        z-index: 999; 
+        top: 0;
+      }
+     
+      .loader-overlay .loader{
+        position: relative;
+        top: 40%;
+        left: 45%;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        perspective: 800px;
+      }
+     
+      .spinner-overlay{
+            z-index: 99;
+            top: -20px;
+            position: absolute;
+          }
+
+    nav svg{
+       fill: white;
+    }
+    
+    .image-overlay{
+      position: absolute;
+      bottom: 0;
+      width: fit-content;
+      background-color: rgba(0, 0, 0, .7);
+      margin: 4px 4px 10px 4px;
+    }
+    .image-overlay.right{
+      right: 0;
+    }
+    .image-overlay p{
+      z-index: 999;
+      color: white;
+      padding: 0 10px 0 10px;
+      font-size: 12px;
+      max-height: 2px;
+      margin-top: 2px;
+    }
+    .rich-thumbnail{
+      position: absolute;
+      bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      opacity: 0;
+    }
+    .rich-thumbnail img{
+      width: 100%;
+      height: 100%;
+    }
+    .rich-thumbnail.hover:hover{
+      opacity: 1;
+    }
+
+    .u-text.u-text-1{
+      color: rgba(250, 250, 250, 1);
+    }
+
+    #articles{
+      background-attachment: fixed;
+      background: url(images/background.png) no-repeat center fixed;
+      background-size: cover;
+    }
+
+ 
+   .u-section-11 .u-text{
+  font-size: 15px;
+  line-height: 2rem;
+  max-height: 4rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  word-break: break-all;
+  margin-top: 10px !important;
+}
+
+  .name h5{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    color: #aaa;
+    white-space: nowrap;
+    font-size: 11px;
+  }
+
+  .thumbnail{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+
+  }
+
+  .thumbnail img{
+     display: block;
+     width: 100%;
+     height: 100%;
+  }
+   .details{
+     margin-left: 45px;
+   }
+   .info{
+     position: relative;
+   }
+   .info p{
+     font-size: 16px;
+   }
+   .footer .container{
+     text-align: center;
+   }
+
+   .logo-wrapper{
+        position: relative;
+   }
+
+   .play-btn{
+    width: 37px;
+    height: 37px;
+    background: radial-gradient( rgba(255, 0, 43, 0.8) 60%, rgba(255, 255, 255, 1) 62%);
+    border-radius: 50%;
+    position: absolute;
+    display: block;
+    box-shadow: 0px 0px 25px 3px rgba(255, 0, 43, 0.8);
+    z-index: 10;
+    top: 30%;
+    left: 27%;
+   }
+   .logo-background-wrapper{
+      max-width: max-content;
+      margin-left: -50px;
+   }
+   .logo-background{
+       width: 429px;
+       height: 123px;
+       background: url(/images/logo.png) center no-repeat;
+   }
+   [lightbox-href]
+   {
+      cursor: pointer;
+   }
+
+    </style>
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/animation.css">
+    <link rel="stylesheet" href="/css/footer.css">
+
+  </head>
+  <body data-home-page="/" data-home-page-title="Uyaranlar" class="u-body">
+    <header class="u-align-center-xs u-clearfix u-custom-color-5 u-header u-header" id="sec-a821" style="background-color:#010e1a">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <a href="https://uyaranlar.com" data-page-id="642214759" class="u-image u-logo u-image-1" data-image-width="425" data-image-height="134" title="Home">
+          <div class="logo-wrapper">
+             <div class="logo-background-wrapper">
+               <div class="logo-background">
+               </div>
+             </div>
+            <div class="play-btn">
+               
+            </div>
+          </div>
+          
+        </a>
+        <nav class="u-align-left u-menu u-menu-dropdown u-nav-spacing-25 u-offcanvas u-offcanvas-shift u-menu-1" data-responsive-from="XL">
+          <div class="menu-collapse">
+            <a class="u-button-style u-nav-link u-text-black" href="#" style="font-size: calc(1em + 8px); padding: 4px 0px;">
+              <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 302 302" style="fill: rgb(136,0,24);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-7b92"></use></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="svg-7b92" x="0px" y="0px" viewBox="0 0 302 302" style="enable-background:new 0 0 302 302; fill: rgb(136,0,24);" xml:space="preserve" class="u-svg-content"><g><rect y="36" width="302" height="30"></rect><rect y="236" width="302" height="30"></rect><rect y="136" width="302" height="30"></rect>
+</g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
+            </a>
+          </div>
+          <div class="u-custom-menu u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/" style="padding: 10px 20px;">Home</a>
+</li></ul>
+          </div>
+          <div class="u-custom-menu u-nav-container-collapse">
+            <div class="u-align-center u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/" style="padding: 10px 20px;">Home</a>
+</li></ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    
+    <section class="articles u-clearfix u-section-11" id="articles">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-expanded-width u-list u-list-1">
+          <div class="u-repeater u-repeater-1">
+            <div class="u-container-style u-list-item u-repeater-item" lightbox-href="#">
+              <div class="u-container-layout u-similar-container u-container-layout-1">
+                <div class="wrapper">
+                <img alt="" class="u-expanded-width u-video u-video-default u-video-1" data-image-width="2000" data-image-height="1333" src="images/16.svg">
+                 <div class="rich-thumbnail">
+                   <img src="images/16.svg">
+                 </div> 
+                <div class="image-overlay">
+                  <p>published</p>
+                  </div>
+                 <div class="image-overlay right">
+                  <p>duration</p>
+                  </div>
+                 </div>
+                 
+                 <div class="meta">
+                   <div class="thumbnail">
+                     <img src="images/default-image.jpg">
+                   </div>
+                      <div class="details">
+                           <h3 class="u-text u-text-1" title="">Sample Headline</h3>
+                           <div class="name"><h5>channel name</h5></div>
+                       </div>
+                   </div>
+              </div>
+            </div>
+            <div class="u-container-style u-list-item u-repeater-item" lightbox-href="#">
+              <div class="u-container-layout u-similar-container u-container-layout-1">
+                <div class="wrapper">
+                  <img alt="" class="u-expanded-width u-video u-video-default u-video-1" data-image-width="2000" data-image-height="1333" src="images/16.svg">
+                  <div class="rich-thumbnail">
+                    <img src="images/16.svg">
+                  </div> 
+                  <div class="image-overlay">
+                    <p>published</p>
+                    </div>
+                   <div class="image-overlay right">
+                    <p>duration</p>
+                    </div>
+                   </div>
+
+                   <div class="meta">
+                    <div class="thumbnail">
+                      <img src="images/default-image.jpg">
+                    </div>
+                       <div class="details">
+                            <h3 class="u-text u-text-1" title="">Sample Headline</h3>
+                            <div class="name"><h5>channel name</h5></div>
+                        </div>
+                    </div>
+              </div>
+            </div>
+            <div class="u-container-style u-list-item u-repeater-item" lightbox-href="#">
+              <div class="u-container-layout u-similar-container u-container-layout-1">
+                <div class="wrapper">
+                  <img alt="" class="u-expanded-width u-video u-video-default u-video-1" data-image-width="2000" data-image-height="1333" src="images/16.svg">
+                  <div class="rich-thumbnail">
+                    <img src="images/16.svg">
+                  </div> 
+                  <div class="image-overlay">
+                    <p>published</p>
+                    </div>
+                   <div class="image-overlay right">
+                    <p>duration</p>
+                    </div>
+                   </div>
+                
+                   <div class="meta">
+                    <div class="thumbnail">
+                      <img src="images/default-image.jpg">
+                    </div>
+                       <div class="details">
+                            <h3 class="u-text u-text-1" title="">Sample Headline</h3>
+                            <div class="name"><h5>channel name</h5></div>
+                        </div>
+                    </div>
+              </div>
+            </div>
+            <div class="u-container-style u-list-item u-repeater-item" lightbox-href="#">
+              <div class="u-container-layout u-similar-container u-container-layout-1">
+
+                <div class="wrapper">
+                  <img alt="" class="u-expanded-width u-video u-video-default u-video-1" data-image-width="2000" data-image-height="1333" src="images/16.svg">
+                  <div class="rich-thumbnail">
+                    <img src="images/16.svg">
+                  </div> 
+                  <div class="image-overlay">
+                    <p>published</p>
+                    </div>
+                   <div class="image-overlay right">
+                    <p>duration</p>
+                    </div>
+                   </div>
+                
+                   <div class="meta">
+                    <div class="thumbnail">
+                      <img src="images/default-image.jpg">
+                    </div>
+                       <div class="details">
+                            <h3 class="u-text u-text-1" title="">Sample Headline</h3>
+                            <div class="name"><h5>channel name</h5></div>
+                        </div>
+                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="position: relative;">
+          <a href="#" class="load-more u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-3 u-text-body-alt-color u-text-hover-white u-btn-1" >Daha Fazla
+          <div class="spinner-overlay" style="display:none;">
+           <img src="./images/spinner.svg" >
+          </div>
+          </a></div>
+      </div>
+      <div class="loader-overlay" >
+        <div class="loader">
+        <div class="inner one"></div>
+        <div class="inner two"></div>
+        <div class="inner three"></div>
+        </div>
+      </div>
+    </section>
+
+      <footer class="footer">
+        <div class="container">
+        <div class="row mb-5">
+         <div class="col-md-8 text-md-right">
+            <a href="https://twitter.com/analiz_btc" rel="sponsored" target="_blank" class="glow-on-hover" style="font-size: 1.7rem;">Candanlar ailesi Twitter'da</a>
+         </div>
+        </div>
+        
+        <div class="row" style="margin-top: 20px;">
+        <div class="col ">
+        <div class="copyright">
+        <div class="info">
+            <div id="button">
+               <p>Designed by syrfox</p>
+               <div class="ring one"></div>
+               <div class="ring two"></div>
+               <div class="ring three"></div>
+               <div class="ring four"></div>
+            </div>
+            
+         
+                 </div>
+                </div>
+        
+        </div>
+        </div>
+        </div>
+        </footer>
+      
+
+    <script src="./js/jquery-3.5.1.min.js"></script>
+    <script class="u-script" type="text/javascript" src="/js/nicepage.js"></script>
+    <script data-main="/js/frontend" src="/js/require.js"></script>
+  </body>
+</html>
