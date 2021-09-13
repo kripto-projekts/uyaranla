@@ -108,7 +108,7 @@ function fillData(query)
                //temps[j].querySelector('.rich-thumbnail img').src = session.buffer[i].richThumbnail;
               // temps[j].querySelector('.rich-thumbnail').classList.add('hover')
            }
-           temps[j].querySelector('.image-overlay p').innerText = session.buffer[i].publishDate.replace('ago', '').replace('streamed', '');
+           temps[j].querySelector('.image-overlay p').innerText = session.buffer[i].publishDate.replace('ago', '').replace('streamed', '').replace('Streamed', '');
            temps[j].querySelector('.image-overlay.right p').innerText = session.buffer[i].duration;
            temps[j].setAttribute('lightbox-href', session.buffer[i].url);
            temps[j].querySelector('h5').innerText = session.buffer[i].channel.meta.chName;
@@ -131,7 +131,7 @@ function fillData(query)
             //clone.querySelector('.rich-thumbnail img').src = session.buffer[0].richThumbnail;
             //clone.querySelector('.rich-thumbnail').classList.add('hover')
         }
-        clone.querySelector('.image-overlay p').innerText = session.buffer[0].publishDate.replace('ago', '').replace('streamed', '');
+        clone.querySelector('.image-overlay p').innerText = session.buffer[0].publishDate.replace('ago', '').replace('streamed', '').replace('Streamed', '');
         clone.querySelector('.image-overlay.right p').innerText = session.buffer[0].duration;
         clone.setAttribute('lightbox-href', session.buffer[0].url);
 
@@ -189,8 +189,7 @@ function fetchMoreContent(url,body, onSuccess, onFail)
       dataType: "json",
       crossDomain: true,
       success: function (rs) {
-          let json = JSON.parse(rs);
-         if(onSuccess)onSuccess(json);
+         if(onSuccess)onSuccess(rs);
       },
       error: function (xhr, stat, e) {
           console.error('error while fetching extra channel contents, please make sure you are connected to the internet.' + ' Url: ' + url + '    post-body: ' + body);
@@ -234,7 +233,7 @@ function initLoadMore()
         }
         session.tcount = session.tcount < 0 ? 0 : session.tcount;
         let i = session.tcount >= session.urls.channels.length  ? 0 : session.tcount;
-        //let i =0;
+       //let i =0;  /*to test post req quickly*/ 
         let timer = setInterval(()=>{
             if(i === session.urls.channels.length){
                 clearInterval(timer);

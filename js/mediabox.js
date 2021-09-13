@@ -91,16 +91,16 @@
             }
 
             urlParams = this.serialize(this.params);
-            //set opacity to 1 in inline style because lightbox is quirkkkkky
+            //set style="opacity:1;" in inline style because lightbox is quirkkkkky
             lightbox = this.template(
-                '<div class="mediabox-wrap" style="opacity:1;" role="dialog" aria-hidden="false"><div class="mediabox-content" role="document" tabindex="0"><span id="mediabox-esc" class="mediabox-close" aria-label="close" tabindex="1"></span><iframe src="{embed}{params}" frameborder="0" allowfullscreen></iframe></div></div>', {
+                '<div class="mediabox-wrap" role="dialog" aria-hidden="false"><div class="mediabox-content" role="document" tabindex="0"><span id="mediabox-esc" class="mediabox-close" aria-label="close" tabindex="1"></span><iframe src="{embed}{params}" frameborder="0" allowfullscreen></iframe></div></div>', {
                     embed: embedLink,
                     params: urlParams
                 });
 
             this.lastFocusElement = document.activeElement;
             this.root.insertAdjacentHTML('beforeend', lightbox);
-            document.body.classList.add('stop-scroll');
+            document.documentElement.classList.add('stop-scroll');
         },
         events: function () {
             var wrapper = document.querySelector('.mediabox-wrap');
@@ -138,7 +138,7 @@
             timer = setTimeout(function() {
                 var el = document.querySelector('.mediabox-wrap');
                 if (el !== null) {
-                    document.body.classList.remove('stop-scroll');
+                    document.documentElement.classList.remove('stop-scroll');
                     this.root.removeChild(el);
                     this.lastFocusElement.focus();
                 }
