@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html style="font-size: 16px;">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,21 +11,6 @@
 
     <title>Uyaranlar Your Source of Crypto News</title>
     <meta name="google-site-verification" content="GY9ld6TNDx-OgxAhWPfEe-8GL55Z2R0KUY4EMVxZXAg" />
-    <!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-   ym(85267297, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true,
-        webvisor:true
-   });
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/85267297" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
     <link rel="stylesheet" href="/css/nicepage.css" media="screen">
     <link rel="stylesheet" href="/css/home.css" media="screen">
     <link rel="stylesheet" href="/css/mediabox.css">
@@ -45,7 +30,7 @@
     <meta property="og:type" content="video.other">
     <meta name="theme-color" content="#478ac9">
     <link rel="canonical" href="https://uyaranlar.com">
-    <meta property="og:url" content="index.html">
+    <meta property="og:url" content="https://uyaranlar.com">
     <meta name="description" content="All crypto news from your favorite crypto sites">
 
     <style>
@@ -58,7 +43,7 @@
         top: 0;
       }
      
-      .loader-overlay .loader{
+      .loader-overlay .loader, .load-more-ch .loader{
         position: relative;
         top: 40%;
         left: 45%;
@@ -66,6 +51,10 @@
         height: 64px;
         border-radius: 50%;
         perspective: 800px;
+      }
+
+      .load-more-ch{
+        z-index: 999;
       }
      
       .spinner-overlay{
@@ -113,19 +102,23 @@
     }
 
     .u-text.u-text-1{
-      color: rgba(250, 250, 250, 1);
+      color: #2d2d2e;
     }
 
     #articles{
+      /*
       background-attachment: fixed;
       background: url(images/background.png) no-repeat center fixed;
       background-size: cover;
+      */
+      background-color: #f5f6f7;
     }
 
  
    .u-section-11 .u-text{
   font-size: 15px;
-  line-height: 2rem;
+  font-weight: 500;
+  line-height: 1.3rem;
   max-height: 4rem;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -141,7 +134,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-transform: uppercase;
-    color: #aaa;
+    color: #1c1c1c;
     white-space: nowrap;
     font-size: 11px;
   }
@@ -205,6 +198,18 @@
       cursor: pointer;
    }
 
+   .grid-header{
+    margin-top: 3%;
+    width: 100%;
+    height: 175px;
+    background-color: black;
+    
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+   }
+
     </style>
     <link rel="stylesheet" href="/css/custom.css">
     <link rel="stylesheet" href="/css/animation.css">
@@ -253,7 +258,10 @@
     </header>
     
     <section class="articles u-clearfix u-section-11" id="articles">
-      <div class="u-clearfix u-sheet u-sheet-1">
+      <div class="u-clearfix u-sheet u-sheet-1 article" id="template">
+        <div class="grid-header" style="background-image: url();">
+           
+        </div>
         <div class="u-expanded-width u-list u-list-1">
           <div class="u-repeater u-repeater-1">
             <div class="u-container-style u-list-item u-repeater-item" lightbox-href="#">
