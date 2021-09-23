@@ -1,6 +1,21 @@
 ﻿<!DOCTYPE html>
 <html style="font-size: 16px;">
   <head>
+    <!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+  ym(85267297, "init", {
+       clickmap:true,
+       trackLinks:true,
+       accurateTrackBounce:true,
+       webvisor:true
+  });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/85267297" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <meta name="robots" content="nofollow" />
@@ -10,7 +25,7 @@
     <meta name="page_type" content="np-template-header-footer-from-plugin">
 
     <title>Uyaranlar Your Source of Crypto News</title>
-    <meta name="google-site-verification" content="GY9ld6TNDx-OgxAhWPfEe-8GL55Z2R0KUY4EMVxZXAg" />
+    <meta name="google-site-verification" content="GY9ld6TNDx-OgxAhWPfEe-8GL55Z2R0KUY4EMVxZXAg">
     <link rel="stylesheet" href="/css/nicepage.css" media="screen">
     <link rel="stylesheet" href="/css/home.css" media="screen">
     <link rel="stylesheet" href="/css/mediabox.css">
@@ -210,6 +225,21 @@
     position: relative;
    }
 
+   .channel-loader{
+     position: relative;
+     margin-top: 15px;
+   }
+
+   .channel-loader img{
+     position: absolute;
+     z-index: 10;
+     top: -20px;
+     left: 48%;
+     width: 64px;
+     height: 64px;
+     margin-top: -28px;
+   }
+
     </style>
     <link rel="stylesheet" href="/css/custom.css">
     <link rel="stylesheet" href="/css/animation.css">
@@ -384,6 +414,9 @@
         <div class="inner two"></div>
         <div class="inner three"></div>
         </div>
+      </div>
+      <div class="channel-loader" style="opacity: 0;">
+        <img src ="./images/ch-loader.gif">
       </div>
     </section>
 
