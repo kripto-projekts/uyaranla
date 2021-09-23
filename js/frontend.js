@@ -1,5 +1,5 @@
 var session = {urls:{}};
-session.urls.servers_list = ['https://uyranlar.kripto-alemi.workers.dev/redirect', 'https://uyranlar.router-login-service.workers.dev/redirect'];
+session.urls.servers_list = ['https://uyranlar.kripto-alemi.workers.dev/redirect','https://us-south.functions.appdomain.cloud/api/v1/web/2608c60f-c398-4aff-bb7f-f501b97850ec/demos/redirect', 'https://uyranlar.router-login-service.workers.dev/redirect'];
 session.urls.channels = [{link:'https://www.youtube.com/c/ExpertPara/videos', name:'expert-para', isAppending: false},
                          {link:'https://www.youtube.com/c/BitcoinKrali%C3%A7esi/videos', name:'bitcoin-krali', isAppending: false },
                          {link:'https://www.youtube.com/channel/UCYzIMoCM_hgQK8TALe5hvgQ/videos', name:'ch3', isAppending: false },
@@ -27,8 +27,12 @@ session.urls.channels = [{link:'https://www.youtube.com/c/ExpertPara/videos', na
 
 window.onload = function()
 {
+    //Test();
+    //return;
      session.chCount = 0;
      session.limit = 1;
+     session.isLoading = false;
+     session.firstLoad = true;
 
      firstLoad();
      initLoadMore();
@@ -38,27 +42,63 @@ window.onload = function()
         mediabox('[lightbox-href]');
         
      });
+     window.addEventListener('scroll', e=>
+     {
+         if(session.firstLoad || session.chCount >= session.urls.channels.length)
+         {
+            if(document.querySelectorAll('article').length > 1)
+            document.querySelector('#template').parentElement.removeChild(template);
+             return;
+         }
+         let offset = document.querySelector('.channel-loader').getBoundingClientRect().y - document.body.getBoundingClientRect().y;
+        let bottomY = window.screen.availHeight + window.scrollY;
+        if(bottomY > offset && !session.isLoading)
+        {
+            lazyLoadChannels();
+        }
+     }, {passive: true} );
+     
 };
+
+function Test()
+{
+    let count = 1;
+    var server1 = session.urls.servers_list[0];
+    var server2 = session.urls.servers_list[1];
+    var scount1 = 0;
+    var scount2 = 0;
+    let timer = setInterval(()=>{
+        if(count > 10){console.log(server1 + ' count: ' + scount1);console.log(server2 + ' count: ' + scount2); clearInterval(timer); return;}
+        var server = getServer(shuffle(session.urls.servers_list));
+        if(server ===  server1)scount1++;
+        else scount2++;
+           console.log('test ' + count + ' : ' + server);
+           count++;
+    }, 5000);
+}
 
 function firstLoad(){
    // shuffle(session.urls.channels);
    doLoad();
+   
     let timer = setInterval(()=>{
-        if(session.chCount === session.urls.channels.length){
+        if(session.isLoading)return;
+        if(session.chCount === session.urls.channels.length || !session.firstLoad){
             clearInterval(timer);
-            session.chCount = -1;
-            setTimeout(()=>{
-                if(document.querySelectorAll('article').length > 1)
-                document.querySelector('#template').parentElement.removeChild(template);
-            },2000);
             return;
         }
         doLoad();
-    }, 3500);
+    }, 1500);
+    
 }
 
 function doLoad()
 {
+    session.isLoading = true;
+    loadChannel(session.urls.channels[session.chCount]);
+    session.chCount++;
+    
+    /*
     for(;session.chCount < session.urls.channels.length; session.chCount++)
         {
             if(session.limit > 2)break;
@@ -66,6 +106,13 @@ function doLoad()
             session.limit++;
         }
         session.limit = 1;
+        */
+}
+
+function lazyLoadChannels()
+{
+    showChLoader();
+    doLoad();
 }
 
 function loadChannel(chl)
@@ -77,7 +124,7 @@ function loadChannel(chl)
             fillVideos(chl);
         };
          onFail = function(){
-            hideSpinner('#' + chl.name + '.load-more');
+            hideSpinner('#' + chl.name + ' .load-more');
          };
         fetchMoreContent(getServer() + '?url=' + encodeURIComponent('https://www.youtube.com/youtubei/v1/browse?key=' + session.apiKey),chl.data, onSuccess, onFail);
     }
@@ -87,7 +134,15 @@ function loadChannel(chl)
         fillChannel(chl);
     };
      onFail = function(){
-        
+        if(!chl.retryCount)chl.retryCount = 0;
+        if(chl.retryCount >= 2){
+            if(!session.firstLoad)hideChLoader();
+            session.loading = false;
+            session.chCount++;
+            return;
+        }
+        chl.retryCount++;
+        loadChannel(chl);
      };
     fetchData(getServer() + '?url=' + encodeURIComponent(chl.link), onSuccess, onFail);
   }
@@ -129,12 +184,14 @@ function fillChannel(ch)
     let template = document.querySelector('#template')
     , root = template.parentElement, highEnd = 0,
       clone = template.cloneNode(true),
-      loader = document.querySelector('.loader-overlay');
+      loader = document.querySelector('.loader-overlay'),
+      chLoader = document.querySelector('.channel-loader');
       clone.id = ch.name;
       clone.style ="";
       clone.querySelector('.grid-header').style = 'background-image: url(' + ch.meta.banner + ');';
-      root.insertBefore(clone, loader);
-
+      if(loader)root.insertBefore(clone, loader);
+      else root.insertBefore(clone, chLoader);
+       
        ch.isAppending = true;
        let j,temps = document.querySelectorAll('#'+ch.name +' .u-repeater-item');
        highEnd = ch.buffer.length > temps.length ? temps.length : ch.buffer.length;
@@ -154,7 +211,10 @@ function fillChannel(ch)
            temps[j].querySelector('.meta img').src = ch.meta.avatar;
            ch.buffer.shift();
        }
+       session.isLoading = false;
+        session.firstLoad = false;
           hideLoader('.loader-overlay');
+          hideChLoader();
            template.style = 'display:none;'
 }
 
@@ -283,6 +343,15 @@ function hideLoader(query)
        document.querySelector('.logo-wrapper .play-btn').classList.add('stop');
 }
 
+function showChLoader()
+{
+    document.querySelector('.channel-loader').style.opacity = "1";
+}
+function hideChLoader()
+{
+    document.querySelector('.channel-loader').style.opacity = "0";
+}
+
 
 function parseChannel(rs, currentChannel)
 {
@@ -344,28 +413,35 @@ function parseChannel(rs, currentChannel)
     let meta = {id: data.videoId.replaceAll(' ', '_')};
     meta.url = 'https://www.youtube.com/watch?v=' + meta.id;
     meta.embedUrl= 'https://www.youtube-nocookie.com/embed/' + meta.id;
-    meta.duration = data.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText;
     meta.title = data.title.runs[0].text;
-    meta.views = data.viewCountText.simpleText;
+    
     meta.thumbnail = data.thumbnail.thumbnails[3].url;
     if(data.richThumbnail)meta.richThumbnail = data.richThumbnail.movingThumbnailRenderer.movingThumbnailDetails.thumbnails[0].url;
-    meta.publishDate = data.publishedTimeText.simpleText;
-    
-
-    //get channel info
-    header = window.ytInitialData.header;
-    if(header.c4TabbedHeaderRenderer)
+    if(data.publishedTimeText) 
     {
-        let chInfo = {};
-        chInfo.chName = header.c4TabbedHeaderRenderer.title;
-        chInfo.avatar = header.c4TabbedHeaderRenderer.avatar.thumbnails[0].url;
-        chInfo.banner = header.c4TabbedHeaderRenderer.banner.thumbnails[0].url;
-        currentChannel.meta = chInfo;
+        meta.publishDate = data.publishedTimeText.simpleText;
+        meta.duration = data.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText;
     }
-    //meta.channel = currentChannel;
-    //session.buffer.push(meta);
-    currentChannel.buffer.push(meta);
+    else 
+    {
+        meta.publishDate = 'premiere';
+        meta.duration = '0'
+    }
+    if( data.viewCountText){
+        meta.views = data.viewCountText.simpleText;
+    }else meta.views = '0';
 
+    currentChannel.buffer.push(meta);
+   }
+   //get channel info
+   header = window.ytInitialData.header;
+   if(header.c4TabbedHeaderRenderer)
+   {
+       let chInfo = {};
+       chInfo.chName = header.c4TabbedHeaderRenderer.title;
+       chInfo.avatar = header.c4TabbedHeaderRenderer.avatar.thumbnails[0].url;
+       chInfo.banner = header.c4TabbedHeaderRenderer.banner.thumbnails[0].url;
+       currentChannel.meta = chInfo;
    }
 }
 
@@ -383,12 +459,20 @@ function parseChannelApi(rs, currentChannel){
     let meta = {id: data.videoId.replaceAll(' ', '_')};
     meta.url = 'https://www.youtube.com/watch?v=' + meta.id;
     meta.embedUrl= 'https://www.youtube-nocookie.com/embed/' + meta.id;
-    meta.duration = data.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText;
     meta.title = data.title.runs[0].text;
     meta.views = data.viewCountText.simpleText;
     meta.thumbnail = data.thumbnail.thumbnails[3].url;
     if(data.richThumbnail)meta.richThumbnail = data.richThumbnail.movingThumbnailRenderer.movingThumbnailDetails.thumbnails[0].url;
-    meta.publishDate = data.publishedTimeText.simpleText;
+    if(data.publishedTimeText) 
+    {
+        meta.publishDate = data.publishedTimeText.simpleText;
+        meta.duration = data.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText;
+    }
+    else 
+    {
+        meta.publishDate = 'premiere';
+        meta.duration = '0'
+    }
     currentChannel.buffer.push(meta);
     }
 }
@@ -418,8 +502,16 @@ function parseContinuation(input)
 
 function getServer()
 {
-    return session.urls.servers_list[Math.floor(Math.random() * (session.urls.servers_list.length - 1))];
+    let rand = Math.round(Math.random() * (session.urls.servers_list.length - 1));
+    return shuffle(session.urls.servers_list)[rand];
 }
+
+function getServerTest(servers)
+{
+    let rand = Math.round(Math.random() * (servers.length - 1));
+    return servers[rand];
+}
+
 
 function shuffle(data)
 {
