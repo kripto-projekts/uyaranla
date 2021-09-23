@@ -74,6 +74,9 @@
     height: 100%;
 
   }
+  .channel-loader{
+    margin-top: 30px;
+  }
   
 }
 
@@ -106,6 +109,11 @@
   .loader-overlay .loader{
     top: 15%;
   }
+  
+  
+  .channel-loader img{
+    left: 40%;
+  } 
 
   .u-section-11 .u-btn-1 {
     margin-left: 20%;
