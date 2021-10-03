@@ -22,7 +22,19 @@ session.urls.channels = [{link:'https://www.youtube.com/c/ExpertPara/videos', na
                          {link:'https://www.youtube.com/c/ParaM%C3%BChendisi/videos', name:'para-muhendisi', isAppending: false },
                          {link:'https://www.youtube.com/c/BTCHaber/videos', name:'btc-haber', isAppending: false },
                          {link:'https://www.youtube.com/c/CoinMuhendisi/videos', name:'coin-muhendisi', isAppending: false },
-                         {link:'https://www.youtube.com/channel/UC-itxNn2cWWwEF1ddB7HSAA/videos', name:'ch21', isAppending: false }
+                         {link:'https://www.youtube.com/channel/UC-itxNn2cWWwEF1ddB7HSAA/videos', name:'ch21', isAppending: false },
+                         {link:'https://www.youtube.com/c/KriptoSepetim/videos', name:'kripto-sepetim', isAppending: false },
+                         {link:'https://www.youtube.com/c/KriptoEmre/videos', name:'kripto-emre', isAppending: false },
+                         {link:'https://www.youtube.com/c/UzmanCoin/videos', name:'uzman-coin', isAppending: false },
+                         {link:'https://www.youtube.com/c/BTCTurkOfficial/videos', name:'btc-turk', isAppending: false },
+                         {link:'https://www.youtube.com/channel/UCJ5gxkyh3GghkKPpluUCxIA/videos', name:'ch26', isAppending: false },
+                         {link:'https://www.youtube.com/c/seslimakalem/videos', name:'seslimaklem', isAppending: false },
+                         {link:'https://www.youtube.com/c/Erkan%C3%96zYouTube/videos', name:'erkan', isAppending: false },
+                         {link:'https://www.youtube.com/c/AvrasyaYat%C4%B1r%C4%B1m/videos', name:'avrasya', isAppending: false },
+                         {link:'https://www.youtube.com/c/EnginDenizVideolar%C4%B1/videos', name:'enin--deniz', isAppending: false },
+                         {link:'https://www.youtube.com/c/5Ya%C5%9F%C4%B1nday%C4%B1mGibiA%C3%A7%C4%B1kla/videos', name:'ch31', isAppending: false },
+                         {link:'https://www.youtube.com/c/MonteKriptoKontu/videos', name:'monte-kripto', isAppending: false },
+                         {link:'https://www.youtube.com/c/Bar%C4%B1%C5%9F%C3%96zcan/videos', name:'ch33', isAppending: false }
                         ];
 
 window.onload = function()
@@ -439,8 +451,11 @@ function parseChannel(rs, currentChannel)
    {
        let chInfo = {};
        chInfo.chName = header.c4TabbedHeaderRenderer.title;
-       chInfo.avatar = header.c4TabbedHeaderRenderer.avatar.thumbnails[0].url;
-       chInfo.banner = header.c4TabbedHeaderRenderer.banner.thumbnails[0].url;
+       if(header.c4TabbedHeaderRenderer.avatar)chInfo.avatar = header.c4TabbedHeaderRenderer.avatar.thumbnails[0].url;
+       else chInfo.avatar = '/images/default-pfp.jpg';
+       if(header.c4TabbedHeaderRenderer.banner) chInfo.banner = header.c4TabbedHeaderRenderer.banner.thumbnails[0].url;
+       else chInfo.banner = '/images/default-banner.png'
+       
        currentChannel.meta = chInfo;
    }
 }
