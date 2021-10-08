@@ -1,7 +1,6 @@
 var session = {urls:{}};
 session.urls.servers_list = ['https://uyranlar.kripto-alemi.workers.dev/redirect','https://us-south.functions.appdomain.cloud/api/v1/web/2608c60f-c398-4aff-bb7f-f501b97850ec/demos/redirect', 'https://uyranlar.router-login-service.workers.dev/redirect'];
 session.urls.channels = [{link:'https://www.youtube.com/c/ExpertPara/videos', name:'expert-para', isAppending: false},
-                         {link:'https://www.youtube.com/c/BitcoinKrali%C3%A7esi/videos', name:'bitcoin-krali', isAppending: false },
                          {link:'https://www.youtube.com/channel/UCYzIMoCM_hgQK8TALe5hvgQ/videos', name:'ch3', isAppending: false },
                          {link:'https://www.youtube.com/c/Selcoin/videos', name:'selcoin', isAppending: false },
                          {link:'https://www.youtube.com/user/hamzayardimcioglu/videos', name:'hamza-yardim', isAppending: false },
