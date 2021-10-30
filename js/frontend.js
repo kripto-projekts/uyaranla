@@ -506,13 +506,12 @@ function parseChannel(rs, currentChannel)
     meta.url = 'https://www.youtube.com/watch?v=' + meta.id;
     meta.embedUrl= 'https://www.youtube-nocookie.com/embed/' + meta.id;
     meta.title = data.title.runs[0].text;
-    meta.thumbnail = data.thumbnail.thumbnails[3].url;
-    /*
+    
     if(data.thumbnail.thumbnails.length > 0){
     let pos = data.thumbnail.thumbnails.length - 1;
     meta.thumbnail = data.thumbnail.thumbnails[pos].url;
     }
-    */
+    
     if(data.richThumbnail)meta.richThumbnail = data.richThumbnail.movingThumbnailRenderer.movingThumbnailDetails.thumbnails[0].url;
     if(data.publishedTimeText) 
     {
