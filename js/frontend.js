@@ -73,6 +73,12 @@ function init()
             lazyLoadChannels();
         }
      }, {passive: true} );
+     document.addEventListener('click', e=>{
+       if(!e.target.className.includes('cb-animate-message'))return;
+       e.preventDefault();
+       let target = document.querySelector('.cb-bottom-message');
+       document.querySelector('#articles').parentElement.removeChild(target);
+     });
 }
 
 function Test()
@@ -135,8 +141,16 @@ function loadChannel(chl)
     let onSuccess, onFail;
     if(chl.data){
         onSuccess = function(rs){
+            try{
             parseChannelApi(rs, chl);
             fillVideos(chl);
+            }
+            catch{
+                showUnhandledError('error while loading channel ' + chl.displayName);
+                //clear the buffer
+                 chl.buffer = [];
+              }
+             fillVideos(chl);
         };
          onFail = function(){
             hideSpinner('#' + chl.name + ' .load-more');
@@ -145,8 +159,15 @@ function loadChannel(chl)
     }
     else{
      onSuccess = function(rs){
+         try{
         parseChannel(rs, chl); 
-        fillChannel(chl);
+        
+         }catch{
+            showUnhandledError('error while loading channel ' + chl.displayName);
+            //clear the buffer
+            chl.buffer = [];
+         }
+         fillChannel(chl);
     };
      onFail = function(){
         if(!chl.retryCount)chl.retryCount = 0;
@@ -203,7 +224,7 @@ function fillChannel(ch)
       chLoader = document.querySelector('.channel-loader');
       clone.id = ch.name;
       clone.style ="";
-      clone.querySelector('.grid-header').style = 'background-image: url(' + ch.meta.banner + ');';
+      if(ch.meta)clone.querySelector('.grid-header').style = 'background-image: url(' + ch.meta.banner + ');';
       if(loader)root.insertBefore(clone, loader);
       else root.insertBefore(clone, chLoader);
        
@@ -329,6 +350,48 @@ function initLoadMore()
     });   
 }
 
+function showUnhandledError(error)
+{
+    let erElement = document.querySelector('.cb-bottom-message');
+    if(!erElement)document.querySelector('#articles').insertAdjacentElement('afterend', createBottomMessageElement(error));
+}
+
+function createBottomMessageElement(error)
+{
+   var bottomMsg = document.createElement('div');
+   var text = document.createElement('p');
+   var timeoutText = document.createElement('a');
+   timeoutText.style.marginRight="40px";
+   timeoutText.style.marginLeft="-30px";
+   timeoutText.style.paddingTop="10px";
+   timeoutText.style.float="right";
+   timeoutText.style.fontSize ="small";
+   timeoutText.className = "cb-animate-message";
+   timeoutText.innerText = "close ";
+   timeoutText.href = '#';
+   
+   text.style.color="aliceblue";
+   text.style.marginTop="8px";
+   text.style.textAlign ="center";
+   text.style.fontSize ="large";
+   text.innerText = error;
+
+   bottomMsg.appendChild(timeoutText);
+   bottomMsg.appendChild(text);
+
+   bottomMsg.className = "cb-bottom-message";
+   bottomMsg.style.background = "radial-gradient(circle farthest-corner at center, #3C4B57 0%, #1C262B 100%);";
+   bottomMsg.style.height= "40px";
+   bottomMsg.style.width="100%";
+   bottomMsg.style.position="fixed";
+   bottomMsg.style.zIndex = "9999";
+   bottomMsg.style.bottom = "0px";
+   bottomMsg.style.textAlign="center";
+   bottomMsg.style.display = "block";
+   bottomMsg.style.transition = 'transform 1.5s ease-in-out';
+   bottomMsg.style.transform = "translateY(0px)";
+   return bottomMsg;
+}
 
 function showSpinner(btn)
 {
@@ -388,6 +451,20 @@ function parseChannel(rs, currentChannel)
     let videos, header,
      tabs = window.ytInitialData.contents.twoColumnBrowseResultsRenderer.tabs;
      currentChannel.buffer = [];
+     //channel meta
+     header = window.ytInitialData.header;
+   if(header.c4TabbedHeaderRenderer)
+   {
+       let chInfo = {};
+       chInfo.chName = header.c4TabbedHeaderRenderer.title;
+       if(header.c4TabbedHeaderRenderer.avatar)chInfo.avatar = header.c4TabbedHeaderRenderer.avatar.thumbnails[0].url;
+       else chInfo.avatar = '/images/default-pfp.jpg';
+       if(header.c4TabbedHeaderRenderer.banner) chInfo.banner = header.c4TabbedHeaderRenderer.banner.thumbnails[0].url;
+       else chInfo.banner = '/images/default-banner.png'
+       
+       currentChannel.meta = chInfo;
+   }
+
     for(var k = 0; k<tabs.length;k++)
     {
         if(!tabs[k].tabRenderer || !tabs[k].tabRenderer.content)continue;
@@ -429,8 +506,13 @@ function parseChannel(rs, currentChannel)
     meta.url = 'https://www.youtube.com/watch?v=' + meta.id;
     meta.embedUrl= 'https://www.youtube-nocookie.com/embed/' + meta.id;
     meta.title = data.title.runs[0].text;
-    
     meta.thumbnail = data.thumbnail.thumbnails[3].url;
+    /*
+    if(data.thumbnail.thumbnails.length > 0){
+    let pos = data.thumbnail.thumbnails.length - 1;
+    meta.thumbnail = data.thumbnail.thumbnails[pos].url;
+    }
+    */
     if(data.richThumbnail)meta.richThumbnail = data.richThumbnail.movingThumbnailRenderer.movingThumbnailDetails.thumbnails[0].url;
     if(data.publishedTimeText) 
     {
@@ -479,7 +561,11 @@ function parseChannelApi(rs, currentChannel){
     meta.embedUrl= 'https://www.youtube-nocookie.com/embed/' + meta.id;
     meta.title = data.title.runs[0].text;
     meta.views = data.viewCountText.simpleText;
-    meta.thumbnail = data.thumbnail.thumbnails[3].url;
+
+    if(data.thumbnail.thumbnails.length > 0){
+        let pos = data.thumbnail.thumbnails.length - 1;
+        meta.thumbnail = data.thumbnail.thumbnails[pos].url;
+        }
     if(data.richThumbnail)meta.richThumbnail = data.richThumbnail.movingThumbnailRenderer.movingThumbnailDetails.thumbnails[0].url;
     if(data.publishedTimeText) 
     {
